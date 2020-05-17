@@ -9,10 +9,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import java.io.Serializable;
+
 
 public class CameraActivity extends AppCompatActivity {
 
     public static final String TAG = CameraActivity.class.getSimpleName();
+
+    static SquareCameraCallback cameraCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,10 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
+    public static void init(SquareCameraCallback callback){
+        cameraCallback = callback;
+    }
+
     private int validateColor(String color){
         try {
             return Color.parseColor(color);
@@ -55,6 +63,10 @@ public class CameraActivity extends AppCompatActivity {
         }
         data.setData(uri);
 
+        if (cameraCallback != null){
+            cameraCallback.onPictureTaken(uri);
+        }
+
         if (getParent() == null) {
             setResult(RESULT_OK, data);
         } else {
@@ -68,6 +80,9 @@ public class CameraActivity extends AppCompatActivity {
         Intent data = new Intent();
         data.putExtra("data_available", false);
 
+        if (cameraCallback != null){
+            cameraCallback.onCancel();
+        }
         if (getParent() == null) {
             setResult(RESULT_CANCELED, data);
         } else {

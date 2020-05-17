@@ -7,16 +7,20 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.mardillu.sqr_camera.CameraActivity;
+import com.mardillu.sqr_camera.SquareCameraCallback;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+import java.io.Serializable;
+
+public class MainActivity extends AppCompatActivity implements SquareCameraCallback {
 
     private static final String TAG = "MainActivity";
 
@@ -34,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Start CameraActivity
+                CameraActivity.init(MainActivity.this);
                 Intent startCustomCameraIntent = new Intent(MainActivity.this, CameraActivity.class);
                 startCustomCameraIntent.putExtra("navigation_color", "#ffffff");
                 startActivityForResult(startCustomCameraIntent, REQUEST_CAMERA);
@@ -52,13 +57,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_OK) {
-            Log.d(TAG, "onActivityResult: No result");
             return;
         }
 
         if (requestCode == REQUEST_CAMERA) {
             Uri photoUri = data.getData();
-            Log.d(TAG, "onActivityResult: " + photoUri);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -76,5 +79,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onPictureTaken(Uri pictureUri) {
+        Log.d(TAG, "onActivityResult: " + pictureUri);
+    }
+
+    @Override
+    public void onCancel() {
+        Log.d(TAG, "onActivityResult: Cancel");
+    }
+
+    @Override
+    public void onError(Exception e){
+        Log.d(TAG, "onActivityResult: Error");
     }
 }
