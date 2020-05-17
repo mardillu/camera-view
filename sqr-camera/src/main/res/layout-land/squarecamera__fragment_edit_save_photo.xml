@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
+
+    <View
+        android:id="@+id/topView"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"/>
+
+    <com.mardillu.sqr_camera.SquareImageView
+        android:id="@+id/photo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:layout_toRightOf="@id/topView"/>
+
+    <ImageView
+        android:id="@+id/retry"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/squarecamera__camera_retry"
+        android:background="@android:color/transparent"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/save_photo"
+        android:layout_marginLeft="60dp"
+        android:onClick="onRetry"
+        android:layout_marginBottom="30dp"/>
+
+    <ImageView
+        android:id="@+id/save_photo"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/squarecamera__save_photo_drawable"
+        android:background="@android:color/transparent"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"/>
+
+    <ImageView
+        android:id="@+id/cancel"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/squarecamera__cancel_drawable"
+        android:background="@android:color/transparent"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/save_photo"
+        android:layout_marginRight="60dp"
+        android:layout_marginBottom="30dp"/>
+
+</RelativeLayout>
