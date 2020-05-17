@@ -48,6 +48,9 @@ public class SquareCameraPreview extends SurfaceView {
     private Camera.Area mFocusArea;
     private ArrayList<Camera.Area> mFocusAreas;
 
+    int width;
+    int height;
+
     public SquareCameraPreview(Context context) {
         super(context);
         init(context);
@@ -76,12 +79,17 @@ public class SquareCameraPreview extends SurfaceView {
      */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int height = MeasureSpec.getSize(heightMeasureSpec);
-        int width = MeasureSpec.getSize(widthMeasureSpec);
+//        int height = MeasureSpec.getSize(heightMeasureSpec);
+//        int width = MeasureSpec.getSize(widthMeasureSpec);
 
-        final boolean isPortrait =
-                getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+        width = resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec);
+        height = resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec);
+        setMeasuredDimension(width, height);
 
+
+//        final boolean isPortrait =
+//                getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+//
 //        if (isPortrait) {
 //            if (width > height * ASPECT_RATIO) {
 //                width = (int) (height * ASPECT_RATIO + 0.5);
@@ -95,16 +103,16 @@ public class SquareCameraPreview extends SurfaceView {
 //                width = (int) (height / ASPECT_RATIO + 0.5);
 //            }
 //        }
-
-        setMeasuredDimension(width, height);
+//
+//        setMeasuredDimension(width, height);
     }
 
     public int getViewWidth() {
-        return getWidth();
+        return width;
     }
 
     public int getViewHeight() {
-        return getHeight();
+        return height;
     }
 
     public void setCamera(Camera camera) {

@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements SquareCameraCallb
             @Override
             public void onClick(View view) {
                 // Start CameraActivity
-                CameraActivity.init(MainActivity.this);
+                CameraActivity.init(1, MainActivity.this);
                 Intent startCustomCameraIntent = new Intent(MainActivity.this, CameraActivity.class);
                 startCustomCameraIntent.putExtra("navigation_color", "#ffffff");
                 startActivityForResult(startCustomCameraIntent, REQUEST_CAMERA);
@@ -82,17 +82,17 @@ public class MainActivity extends AppCompatActivity implements SquareCameraCallb
     }
 
     @Override
-    public void onPictureTaken(Uri pictureUri) {
+    public void onPictureTaken(int requestCode, Uri pictureUri) {
         Log.d(TAG, "onActivityResult: " + pictureUri);
     }
 
     @Override
-    public void onCancel() {
+    public void onCancel(int requestCode) {
         Log.d(TAG, "onActivityResult: Cancel");
     }
 
     @Override
-    public void onError(Exception e){
+    public void onError(int requestCode, Exception e){
         Log.d(TAG, "onActivityResult: Error");
     }
 }

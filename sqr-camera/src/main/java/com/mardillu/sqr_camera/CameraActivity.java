@@ -17,6 +17,7 @@ public class CameraActivity extends AppCompatActivity {
     public static final String TAG = CameraActivity.class.getSimpleName();
 
     static SquareCameraCallback cameraCallback;
+    static int requestCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +40,9 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
-    public static void init(SquareCameraCallback callback){
+    public static void init(int requesCode, SquareCameraCallback callback){
         cameraCallback = callback;
+        requestCode = requesCode;
     }
 
     private int validateColor(String color){
@@ -64,7 +66,7 @@ public class CameraActivity extends AppCompatActivity {
         data.setData(uri);
 
         if (cameraCallback != null){
-            cameraCallback.onPictureTaken(uri);
+            cameraCallback.onPictureTaken(requestCode, uri);
         }
 
         if (getParent() == null) {
@@ -81,7 +83,7 @@ public class CameraActivity extends AppCompatActivity {
         data.putExtra("data_available", false);
 
         if (cameraCallback != null){
-            cameraCallback.onCancel();
+            cameraCallback.onCancel(requestCode);
         }
         if (getParent() == null) {
             setResult(RESULT_CANCELED, data);

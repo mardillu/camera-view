@@ -46,6 +46,8 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
     private Camera mCamera;
     private SquareCameraPreview mPreviewView;
     private SurfaceHolder mSurfaceHolder;
+    private List<Camera.Size> mSupportedPreviewSizes;
+    private Camera.Size mPreviewSize;
 
     private boolean mIsSafeToTakePhoto = false;
 
@@ -214,6 +216,7 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
     private void getCamera(int cameraID) {
         try {
             mCamera = Camera.open(cameraID);
+            mSupportedPreviewSizes = mCamera.getParameters().getSupportedPreviewSizes();
             mPreviewView.setCamera(mCamera);
         } catch (Exception e) {
             Log.d(TAG, "Can't open camera with id " + cameraID);
@@ -332,8 +335,7 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
     private void setupCamera() {
         // Never keep a global parameters
         Camera.Parameters parameters = mCamera.getParameters();
-
-        Size bestPreviewSize = determineBestPreviewSize(parameters);
+        Size bestPreviewSize = getOptimalPreviewSize(mSupportedPreviewSizes, mPreviewView.width, mPreviewView.height);
         Size bestPictureSize = determineBestPictureSize(parameters);
 
         parameters.setPreviewSize(bestPreviewSize.width, bestPreviewSize.height);
@@ -572,5 +574,35 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
             rememberOrientation();
             return mRememberedNormalOrientation;
         }
+    }
+
+    private Camera.Size getOptimalPreviewSize(List<Camera.Size> sizes, int w, int h) {
+        final double ASPECT_TOLERANCE = 0.1;
+        double targetRatio=(double)h / w;
+
+        if (sizes == null) return null;
+
+        Camera.Size optimalSize = null;
+        double minDiff = Double.MAX_VALUE;
+
+        for (Camera.Size size : sizes) {
+            double ratio = (double) size.width / size.height;
+            if (Math.abs(ratio - targetRatio) > ASPECT_TOLERANCE) continue;
+            if (Math.abs(size.height - h) < minDiff) {
+                optimalSize = size;
+                minDiff = Math.abs(size.height - h);
+            }
+        }
+
+        if (optimalSize == null) {
+            minDiff = Double.MAX_VALUE;
+            for (Camera.Size size : sizes) {
+                if (Math.abs(size.height - h) < minDiff) {
+                    optimalSize = size;
+                    minDiff = Math.abs(size.height - h);
+                }
+            }
+        }
+        return optimalSize;
     }
 }
