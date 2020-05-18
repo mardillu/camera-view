@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -50,7 +51,7 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
     private Camera.Size mPreviewSize;
 
     private boolean mIsSafeToTakePhoto = false;
-
+    private int docType;
     private ImageParameters mImageParameters;
 
     private CameraOrientationListener mOrientationListener;
@@ -95,11 +96,26 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
         super.onViewCreated(view, savedInstanceState);
         mOrientationListener.enable();
 
-        mPreviewView = (SquareCameraPreview) view.findViewById(R.id.camera_preview_view);
+        mPreviewView = view.findViewById(R.id.camera_preview_view);
         mPreviewView.getHolder().addCallback(CameraFragment.this);
+
+        docType = getArguments().getInt("doc_type");
 
         final View topCoverView = view.findViewById(R.id.cover_top_view);
         final View btnCoverView = view.findViewById(R.id.cover_bottom_view);
+        LinearLayout notificationLayout = view.findViewById(R.id.notification_layout);
+        ImageView notificationIcon = view.findViewById(R.id.notification_icon);
+        TextView notificationText = view.findViewById(R.id.notification_text);
+
+        if (docType == 1){
+            notificationIcon.setImageResource(R.drawable.img_person_circle);
+            notificationText.setText(R.string.take_picture_of_farmer);
+        }else if (docType == 2){
+            notificationIcon.setImageResource(R.drawable.img_person_id);
+            notificationText.setText(R.string.take_picture_of_farmer_id);
+        }else {
+            notificationLayout.setVisibility(View.GONE);
+        }
 
         mImageParameters.mIsPortrait =
                 getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;

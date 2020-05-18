@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.View;
@@ -18,6 +19,7 @@ public class CameraActivity extends AppCompatActivity {
 
     static SquareCameraCallback cameraCallback;
     static int requestCode;
+    static int docType; //1=profile; 2=id document
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,17 +34,22 @@ public class CameraActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             String color = getIntent().getStringExtra("navigation_color");
             int intColor = validateColor(color);
+            Bundle bundle = new Bundle();
+            bundle.putInt("doc_type", docType);
+            Fragment cameraFragment = CameraFragment.newInstance(intColor);
+            cameraFragment.setArguments(bundle);
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, CameraFragment.newInstance(intColor), CameraFragment.TAG)
+                    .replace(R.id.fragment_container, cameraFragment, CameraFragment.TAG)
                     .commit();
 
         }
     }
 
-    public static void init(int requesCode, SquareCameraCallback callback){
+    public static void init(int requesCode, SquareCameraCallback callback, int dType){
         cameraCallback = callback;
         requestCode = requesCode;
+        docType = dType;
     }
 
     private int validateColor(String color){

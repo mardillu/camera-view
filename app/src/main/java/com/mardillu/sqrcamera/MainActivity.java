@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import java.io.Serializable;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements SquareCameraCallback {
 
@@ -38,7 +39,8 @@ public class MainActivity extends AppCompatActivity implements SquareCameraCallb
             @Override
             public void onClick(View view) {
                 // Start CameraActivity
-                CameraActivity.init(1, MainActivity.this);
+                int r = new Random().nextInt(3);
+                CameraActivity.init(1, MainActivity.this, r+1);
                 Intent startCustomCameraIntent = new Intent(MainActivity.this, CameraActivity.class);
                 startCustomCameraIntent.putExtra("navigation_color", "#ffffff");
                 startActivityForResult(startCustomCameraIntent, REQUEST_CAMERA);

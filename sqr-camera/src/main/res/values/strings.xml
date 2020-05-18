@@ -15,4 +15,6 @@
     <string name="squarecamera__capturing_image">Taking New Picture</string>
     <string name="squarecamera__done">Done</string>
     <string name="squarecamera__request_write_storage_permission_text">Approval is needed to save your photo on your device</string>
+    <string name="take_picture_of_farmer">Take a clear photo of farmer</string>
+    <string name="take_picture_of_farmer_id">Take a clear photo of farmer\'s ID document</string>
 </resources>

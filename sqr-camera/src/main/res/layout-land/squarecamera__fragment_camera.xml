@@ -10,6 +10,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <LinearLayout
+        android:id="@+id/notification_layout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/camera_tools_view"
+        android:background="@drawable/bg_camera_notification"
+        android:orientation="horizontal"
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp">
+
+        <ImageView
+            android:id="@+id/notification_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/img_person_circle" />
+
+        <TextView
+            android:id="@+id/notification_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="Take farmer image"
+            android:textColor="@color/squarecamera__white" />
+
+    </LinearLayout>
+
     <View
         android:id="@+id/cover_top_view"
         android:layout_width="@dimen/squarecamera__cover_start_width"
