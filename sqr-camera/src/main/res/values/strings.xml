@@ -17,4 +17,7 @@
     <string name="squarecamera__request_write_storage_permission_text">Approval is needed to save your photo on your device</string>
     <string name="take_picture_of_farmer">Take a clear photo of farmer</string>
     <string name="take_picture_of_farmer_id">Take a clear photo of farmer\'s ID document</string>
+    <string name="sq_grant_permission_access">Camera Access</string>
+    <string name="permission_request_description">Allow permission to access device camera to continue with the verification</string>
+    <string name="sq_allow_access">Allow Access</string>
 </resources>

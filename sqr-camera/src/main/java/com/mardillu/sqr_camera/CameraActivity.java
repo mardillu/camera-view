@@ -1,9 +1,14 @@
 package com.mardillu.sqr_camera;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -20,6 +25,7 @@ public class CameraActivity extends AppCompatActivity {
     static SquareCameraCallback cameraCallback;
     static int requestCode;
     static int docType; //1=profile; 2=id document
+    int intColor = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,16 +39,54 @@ public class CameraActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             String color = getIntent().getStringExtra("navigation_color");
-            int intColor = validateColor(color);
-            Bundle bundle = new Bundle();
-            bundle.putInt("doc_type", docType);
-            Fragment cameraFragment = CameraFragment.newInstance(intColor);
-            cameraFragment.setArguments(bundle);
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, cameraFragment, CameraFragment.TAG)
-                    .commit();
+            intColor = validateColor(color);
+            if (checkHasPermission()){
+                Fragment cameraFragment = CameraFragment.newInstance(intColor);
+                Bundle bundle = new Bundle();
+                bundle.putInt("doc_type", docType);
+                cameraFragment.setArguments(bundle);
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, cameraFragment, CameraFragment.TAG)
+                        .commit();
+            }else {
+                requestPermission();
+            }
+        }
+    }
 
+    boolean checkHasPermission() {
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M || (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void requestPermission() {
+        requestPermissions(new String[]{Manifest.permission.CAMERA}, 1);
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void allowAccess(View view){
+        requestPermission();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Fragment cameraFragment = CameraFragment.newInstance(intColor);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("doc_type", docType);
+                    cameraFragment.setArguments(bundle);
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, cameraFragment, CameraFragment.TAG)
+                            .commit();
+                } else {
+
+                }
+            }
         }
     }
 

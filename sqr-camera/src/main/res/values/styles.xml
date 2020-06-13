@@ -5,7 +5,7 @@
 
     </style>
 
-    <style name="squarecamera__CameraFullScreenTheme.Base" parent="Theme.AppCompat.NoActionBar">
+    <style name="squarecamera__CameraFullScreenTheme.Base" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>

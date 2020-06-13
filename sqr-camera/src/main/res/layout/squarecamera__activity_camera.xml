@@ -1,9 +1,70 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".CameraActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:background="#fff"
+        android:paddingTop="80dp">
+
+        <ImageView
+            android:id="@+id/icon_storage"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="50dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_camera_black_24dp" />
+
+
+        <TextView
+            android:id="@+id/header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginTop="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/icon_storage"
+            android:text="@string/sq_grant_permission_access" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#252C3A"
+            android:textSize="15sp"
+            android:layout_below="@+id/header"
+            android:gravity="center"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/permission_request_description" />
+
+        <com.google.android.material.button.MaterialButton
+            app:backgroundTint="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/btn_action"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            android:clickable="true"
+            android:enabled="true"
+            android:focusable="true"
+            android:textAllCaps="false"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:onClick="allowAccess"
+            android:text="@string/sq_allow_access" />
+
+    </RelativeLayout>
+
 
 </FrameLayout>
